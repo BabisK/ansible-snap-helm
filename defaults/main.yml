@@ -1,0 +1,4 @@
+---
+helm_snap__state: present
+helm_snap__channel: "stable"
+helm_snap__autocomplete: true

@@ -1,0 +1,39 @@
+---
+- name: Make sure dependencies are installed
+  ansible.builtin.apt:
+    name:
+      - snapd
+    state: present
+    update_cache: true
+  tags:
+    - helm
+    - helm.install
+- name: Install helm from snap
+  become: true
+  community.general.snap:
+    name: helm
+    classic: true
+    state: {{ helm_snap__state }}
+    channel: {{ helm_snap__channel }}
+  tags:
+    - helm
+    - helm.install
+
+- name: Check if bash is installed
+  ansible.builtin.command: dpkg-query -W bash
+  ignore_errors: True
+  register: bash_installed
+  when: helm_snap__autocomplete
+  tags:
+    - helm
+    - helm.autocomplete
+    - helm.autocomplete.bash
+- name: Enable helm autocomplete for bash
+  become: true
+  ansible.builtin.shell:
+    cmd: helm completion bash > /etc/bash_completion.d/kubectl
+  when: helm_snap__autocomplete and bash_installed is succeded
+  tags:
+    - helm
+    - helm.autocomplete
+    - helm.autocomplete.bash
