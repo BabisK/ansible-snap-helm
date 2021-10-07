@@ -13,8 +13,8 @@
   community.general.snap:
     name: helm
     classic: true
-    state: {{ helm_snap__state }}
-    channel: {{ helm_snap__channel }}
+    state: '{{ helm_snap__state }}'
+    channel: '{{ helm_snap__channel }}'
   tags:
     - helm
     - helm.install
