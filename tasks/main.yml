@@ -32,7 +32,7 @@
   become: true
   ansible.builtin.shell:
     cmd: helm completion bash > /etc/bash_completion.d/kubectl
-  when: helm_snap__autocomplete and bash_installed is succeded
+  when: helm_snap__autocomplete and bash_installed is succeeded
   tags:
     - helm
     - helm.autocomplete
